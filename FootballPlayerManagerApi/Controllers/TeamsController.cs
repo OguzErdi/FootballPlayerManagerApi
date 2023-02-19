@@ -1,6 +1,5 @@
 using FootballPlayerManagerApi.Services.Implementations;
 using FootballPlayerManagerApi.Services.Interfaces;
-using FootballPlayerManagerApi.Services.PlayersService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FootballPlayerManagerApi.Controllers;

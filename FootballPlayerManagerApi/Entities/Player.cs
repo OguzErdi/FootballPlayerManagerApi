@@ -1,5 +1,5 @@
 
-namespace FootballPlayerManagerApi.Services.PlayersService;
+namespace FootballPlayerManagerApi.Entities;
 
 public record Player
 {

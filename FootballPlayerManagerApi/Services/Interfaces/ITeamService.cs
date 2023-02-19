@@ -1,10 +1,11 @@
-using FootballPlayerManagerApi.Services.PlayersService;
+using FootballPlayerManagerApi.Contracts;
+using FootballPlayerManagerApi.Entities;
 
 namespace FootballPlayerManagerApi.Services.Interfaces;
 
 public interface ITeamService
 {
-    IEnumerable<Player> GetTeamsPlayersAsync(string id);
+    Task<ServiceResponse<IEnumerable<Player>>> GetTeamsPlayersAsync(string id);
     bool AddPlayerToTeamAsync(string id);
     bool DeletePlayerFromTeamAsync(string id);
 }

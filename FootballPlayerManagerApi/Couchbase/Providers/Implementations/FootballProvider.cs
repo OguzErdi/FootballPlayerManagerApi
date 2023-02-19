@@ -1,10 +1,10 @@
 using Couchbase;
 using Couchbase.KeyValue;
-using FootballPlayerManagerApi.CouchbaseProviders.Interfaces;
+using FootballPlayerManagerApi.Couchbase.Providers.Interfaces;
 
-namespace FootballPlayerManagerApi.CouchbaseProviders.Implementations;
+namespace FootballPlayerManagerApi.Couchbase.Providers.Implementations;
 
-public class FootballBucketProvider : IFootballBucketProvider
+public class FootballProvider : IFootballProvider
 {
     private const string FootballBucketName = "football-bucket";
     private readonly ICouchbaseProvider _couchbase;
@@ -12,7 +12,7 @@ public class FootballBucketProvider : IFootballBucketProvider
     private IScope _scope;
     private readonly Dictionary<string, ICouchbaseCollection> _couchbaseCollections = new();
 
-    public FootballBucketProvider(ICouchbaseProvider couchbase)
+    public FootballProvider(ICouchbaseProvider couchbase)
     {
         _couchbase = couchbase;
     }
@@ -32,7 +32,7 @@ public class FootballBucketProvider : IFootballBucketProvider
         if (_scope != null) return _scope;
 
         var bucket = await GetBucket();
-        _scope = await bucket.ScopeAsync("_default");
+        _scope = await bucket.DefaultScopeAsync();
 
         return _scope;
     }

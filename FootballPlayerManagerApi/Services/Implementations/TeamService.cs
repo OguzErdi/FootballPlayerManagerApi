@@ -1,6 +1,7 @@
+using FootballPlayerManagerApi.Contracts;
+using FootballPlayerManagerApi.Entities;
 using FootballPlayerManagerApi.Repositories.Interfaces;
 using FootballPlayerManagerApi.Services.Interfaces;
-using FootballPlayerManagerApi.Services.PlayersService;
 
 namespace FootballPlayerManagerApi.Services.Implementations;
 
@@ -13,9 +14,9 @@ public class TeamService : ITeamService
         _teamsService = teamsService;
     }
 
-    public IEnumerable<Player> GetTeamsPlayersAsync(string id)
+    public async Task<ServiceResponse<IEnumerable<Player>>> GetTeamsPlayersAsync(string id)
     {
-        return _teamsService.GetTeamsPlayersAsync(id);
+        throw new NotImplementedException();
     }
 
     public bool AddPlayerToTeamAsync(string id)

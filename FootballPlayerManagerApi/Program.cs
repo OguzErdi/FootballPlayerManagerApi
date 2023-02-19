@@ -1,6 +1,6 @@
 using FootballPlayerManagerApi.ConfigOptions;
-using FootballPlayerManagerApi.CouchbaseProviders.Implementations;
-using FootballPlayerManagerApi.CouchbaseProviders.Interfaces;
+using FootballPlayerManagerApi.Couchbase.Providers.Implementations;
+using FootballPlayerManagerApi.Couchbase.Providers.Interfaces;
 using FootballPlayerManagerApi.Repositories.Implementations;
 using FootballPlayerManagerApi.Repositories.Interfaces;
 using FootballPlayerManagerApi.Services.Implementations;
@@ -20,7 +20,7 @@ builder.Services.Configure<CouchbaseOptions>(builder.Configuration.GetSection("C
 
 // Add Application Service
 builder.Services.AddSingleton<ICouchbaseProvider, CouchbaseProvider>();
-builder.Services.AddSingleton<IFootballBucketProvider, FootballBucketProvider>();
+builder.Services.AddSingleton<IFootballProvider, FootballProvider>();
 builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
 builder.Services.AddScoped<ITeamRepository, TeamRepository>();
@@ -42,3 +42,9 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+// ReSharper disable once ClassNeverInstantiated.Global
+namespace FootballPlayerManagerApi
+{
+    public partial class Program { }
+}

@@ -1,26 +1,33 @@
+using Couchbase.Core.Exceptions.KeyValue;
 using Couchbase.KeyValue;
-using FootballPlayerManagerApi.CouchbaseProviders.Interfaces;
+using FootballPlayerManagerApi.Couchbase.Providers.Interfaces;
+using FootballPlayerManagerApi.Entities;
 using FootballPlayerManagerApi.Repositories.Interfaces;
-using FootballPlayerManagerApi.Services.PlayersService;
 
 namespace FootballPlayerManagerApi.Repositories.Implementations;
 
 public class PlayerRepository : IPlayerRepository
 {
-    private const string PlayerCollectionName = "player-collection";
-    private readonly IFootballBucketProvider _footballBucketProvider;
+    public const string PlayerCollectionName = "player-collection";
+    private readonly IFootballProvider _footballProvider;
 
-    public PlayerRepository(IFootballBucketProvider footballBucketProvider)
+    public PlayerRepository(IFootballProvider footballProvider)
     {
-        _footballBucketProvider = footballBucketProvider;
+        _footballProvider = footballProvider;
     }
 
     public async Task<Player?> GetPlayerAsync(string id)
     {
         var collection = await GetCollection();
-        var getResult = await collection.GetAsync(id);
-
-        return getResult.ContentAs<Player>();
+        try
+        {
+            var getResult = await collection.GetAsync(id);
+            return getResult.ContentAs<Player>();
+        }
+        catch (DocumentNotFoundException)
+        {
+            return null;
+        }
     }
 
     public bool UpdatePlayerAsync(string id)
@@ -30,6 +37,6 @@ public class PlayerRepository : IPlayerRepository
 
     private async Task<ICouchbaseCollection> GetCollection()
     {
-        return await _footballBucketProvider.GetCollection(PlayerCollectionName);
+        return await _footballProvider.GetCollection(PlayerCollectionName);
     }
 }

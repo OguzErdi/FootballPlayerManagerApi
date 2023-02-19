@@ -1,7 +1,9 @@
+using FootballPlayerManagerApi.Constants;
+using FootballPlayerManagerApi.Contracts;
+using FootballPlayerManagerApi.Entities;
 using FootballPlayerManagerApi.Repositories.Implementations;
 using FootballPlayerManagerApi.Repositories.Interfaces;
 using FootballPlayerManagerApi.Services.Interfaces;
-using FootballPlayerManagerApi.Services.PlayersService;
 
 namespace FootballPlayerManagerApi.Services.Implementations;
 
@@ -14,9 +16,22 @@ public class PlayerService : IPlayerService
         _playerRepository = playerRepository;
     }
 
-    public async Task<Player> GetPlayerAsync(string id)
+    public async Task<ServiceResponse<Player>> GetPlayerAsync(string id)
     {
-        return await _playerRepository.GetPlayerAsync(id);
+        ServiceResponse<Player> serviceResponse = new();
+
+        var player = await _playerRepository.GetPlayerAsync(id);
+        if (player is null)
+        {
+            serviceResponse.ErrorMessage = ErrorMessages.PlayerNotFound;
+        }
+        else
+        {
+            serviceResponse.Data = player;
+        }
+
+
+        return serviceResponse;
     }
 
     public bool UpdatePlayerAsync(string id)

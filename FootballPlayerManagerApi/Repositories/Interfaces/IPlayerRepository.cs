@@ -1,4 +1,4 @@
-using FootballPlayerManagerApi.Services.PlayersService;
+using FootballPlayerManagerApi.Entities;
 
 namespace FootballPlayerManagerApi.Repositories.Interfaces;
 

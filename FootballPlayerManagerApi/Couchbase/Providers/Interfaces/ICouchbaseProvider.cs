@@ -1,6 +1,6 @@
 using Couchbase;
 
-namespace FootballPlayerManagerApi.CouchbaseProviders.Interfaces;
+namespace FootballPlayerManagerApi.Couchbase.Providers.Interfaces;
 
 public interface ICouchbaseProvider
 {

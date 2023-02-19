@@ -1,9 +1,9 @@
 using Couchbase;
 using Couchbase.KeyValue;
 
-namespace FootballPlayerManagerApi.CouchbaseProviders.Interfaces;
+namespace FootballPlayerManagerApi.Couchbase.Providers.Interfaces;
 
-public interface IFootballBucketProvider
+public interface IFootballProvider
 {
     Task<ICouchbaseCollection> GetCollection(string collectionName);
     Task<IScope> GetScope();

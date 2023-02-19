@@ -1,10 +1,10 @@
 using Couchbase;
 using Couchbase.Linq;
 using FootballPlayerManagerApi.ConfigOptions;
-using FootballPlayerManagerApi.CouchbaseProviders.Interfaces;
+using FootballPlayerManagerApi.Couchbase.Providers.Interfaces;
 using Microsoft.Extensions.Options;
 
-namespace FootballPlayerManagerApi.CouchbaseProviders.Implementations;
+namespace FootballPlayerManagerApi.Couchbase.Providers.Implementations;
 
 public class CouchbaseProvider : ICouchbaseProvider
 {

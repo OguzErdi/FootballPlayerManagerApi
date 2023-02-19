@@ -1,10 +1,11 @@
-using FootballPlayerManagerApi.Services.PlayersService;
+using FootballPlayerManagerApi.Contracts;
+using FootballPlayerManagerApi.Entities;
 
 namespace FootballPlayerManagerApi.Services.Interfaces;
 
 public interface IPlayerService
 {
-    public Task<Player> GetPlayerAsync(string id);
+    public Task<ServiceResponse<Player>> GetPlayerAsync(string id);
 
     public bool UpdatePlayerAsync(string id);
 }
