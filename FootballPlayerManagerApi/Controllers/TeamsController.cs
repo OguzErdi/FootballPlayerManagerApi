@@ -21,7 +21,7 @@ public class TeamsController : ControllerBase
     [HttpGet, Route("players")]
     public IActionResult GetTeamsPlayers(string id)
     {
-        var players = _teamService.GetTeamsPlayers(id);
+        var players = _teamService.GetTeamsPlayersAsync(id);
         return Ok(true);
     }
 
@@ -29,7 +29,7 @@ public class TeamsController : ControllerBase
     public IActionResult AddPlayerToTeam(string id)
     {
         
-        var result = _teamService.AddPlayerToTeam(id);
+        var result = _teamService.AddPlayerToTeamAsync(id);
         return Ok(true);
     }
 
@@ -37,7 +37,7 @@ public class TeamsController : ControllerBase
     public IActionResult DeletePlayerFromTeam(string id)
     {
         
-        var result = _teamService.DeletePlayerFromTeam(id);
+        var result = _teamService.DeletePlayerFromTeamAsync(id);
         return Ok(true);
     }
 }

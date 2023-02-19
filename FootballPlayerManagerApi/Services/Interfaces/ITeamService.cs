@@ -4,7 +4,7 @@ namespace FootballPlayerManagerApi.Services.Interfaces;
 
 public interface ITeamService
 {
-    IEnumerable<Player> GetTeamsPlayers(string id);
-    bool AddPlayerToTeam(string id);
-    bool DeletePlayerFromTeam(string id);
+    IEnumerable<Player> GetTeamsPlayersAsync(string id);
+    bool AddPlayerToTeamAsync(string id);
+    bool DeletePlayerFromTeamAsync(string id);
 }

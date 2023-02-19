@@ -21,14 +21,14 @@ public class PlayersController : ControllerBase
     [HttpGet, Route("")]
     public async Task<IActionResult> GetPlayer(string id)
     {
-        var player = await _playerService.GetPlayer(id);
+        var player = await _playerService.GetPlayerAsync(id);
         return Ok(player);
     }
 
     [HttpPut, Route("")]
     public IActionResult UpdatePlayer(string id)
     {
-        var player = _playerService.UpdatePlayer(id);
+        var player = _playerService.UpdatePlayerAsync(id);
         return Ok(true);
     }
 }

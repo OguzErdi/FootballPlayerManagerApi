@@ -5,17 +5,17 @@ namespace FootballPlayerManagerApi.Repositories.Implementations;
 
 public class TeamRepository : ITeamRepository
 {
-    public IEnumerable<Player> GetTeamsPlayers(string id)
+    public IEnumerable<Player> GetTeamsPlayersAsync(string id)
     {
         throw new NotImplementedException();
     }
 
-    public bool AddPlayerToTeam(string id)
+    public bool AddPlayerToTeamAsync(string id)
     {
         throw new NotImplementedException();
     }
 
-    public bool DeletePlayerFromTeam(object id)
+    public bool DeletePlayerFromTeamAsync(object id)
     {
         throw new NotImplementedException();
     }

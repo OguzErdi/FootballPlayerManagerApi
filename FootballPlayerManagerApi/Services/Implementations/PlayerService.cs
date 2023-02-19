@@ -14,13 +14,13 @@ public class PlayerService : IPlayerService
         _playerRepository = playerRepository;
     }
 
-    public async Task<Player> GetPlayer(string id)
+    public async Task<Player> GetPlayerAsync(string id)
     {
-        return await _playerRepository.GetPlayer(id);
+        return await _playerRepository.GetPlayerAsync(id);
     }
 
-    public bool UpdatePlayer(string id)
+    public bool UpdatePlayerAsync(string id)
     {
-        return _playerRepository.UpdatePlayer(id);
+        return _playerRepository.UpdatePlayerAsync(id);
     }
 }

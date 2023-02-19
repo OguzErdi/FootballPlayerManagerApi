@@ -15,7 +15,7 @@ public class PlayerRepository : IPlayerRepository
         _footballBucketProvider = footballBucketProvider;
     }
 
-    public async Task<Player?> GetPlayer(string id)
+    public async Task<Player?> GetPlayerAsync(string id)
     {
         var collection = await GetCollection();
         var getResult = await collection.GetAsync(id);
@@ -23,7 +23,7 @@ public class PlayerRepository : IPlayerRepository
         return getResult.ContentAs<Player>();
     }
 
-    public bool UpdatePlayer(string id)
+    public bool UpdatePlayerAsync(string id)
     {
         throw new NotImplementedException();
     }

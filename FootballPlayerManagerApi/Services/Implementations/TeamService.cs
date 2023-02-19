@@ -13,18 +13,18 @@ public class TeamService : ITeamService
         _teamsService = teamsService;
     }
 
-    public IEnumerable<Player> GetTeamsPlayers(string id)
+    public IEnumerable<Player> GetTeamsPlayersAsync(string id)
     {
-        return _teamsService.GetTeamsPlayers(id);
+        return _teamsService.GetTeamsPlayersAsync(id);
     }
 
-    public bool AddPlayerToTeam(string id)
+    public bool AddPlayerToTeamAsync(string id)
     {
-        return _teamsService.AddPlayerToTeam(id);
+        return _teamsService.AddPlayerToTeamAsync(id);
     }
 
-    public bool DeletePlayerFromTeam(string id)
+    public bool DeletePlayerFromTeamAsync(string id)
     {
-        return _teamsService.DeletePlayerFromTeam(id);
+        return _teamsService.DeletePlayerFromTeamAsync(id);
     }
 }

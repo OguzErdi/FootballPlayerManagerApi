@@ -4,7 +4,7 @@ namespace FootballPlayerManagerApi.Repositories.Interfaces;
 
 public interface IPlayerRepository
 {
-    public Task<Player?> GetPlayer(string id);
+    public Task<Player?> GetPlayerAsync(string id);
 
-    public bool UpdatePlayer(string id);
+    public bool UpdatePlayerAsync(string id);
 }
