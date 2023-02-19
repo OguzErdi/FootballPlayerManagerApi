@@ -6,8 +6,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{AF6E5694
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballPlayerManagerApi.UnitTests", "FootballPlayerManagerApi.UnitTests\FootballPlayerManagerApi.UnitTests.csproj", "{F936F616-F4B0-4364-80D3-4CF7F146CDCE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballPlayerManagerApi.IntegrationTests", "FootballPlayerManagerApi.IntegrationTests\FootballPlayerManagerApi.IntegrationTests.csproj", "{66D69D8B-C546-4E9F-8355-AAFC206DBBD2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballPlayerManagerApi", "FootballPlayerManagerApi\FootballPlayerManagerApi.csproj", "{687AACC9-8B3B-4B58-B6F5-28F58133D09E}"
 EndProject
 Global
@@ -17,7 +15,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F936F616-F4B0-4364-80D3-4CF7F146CDCE} = {AF6E5694-8BD6-4E50-AF1D-33141EA552FC}
-		{66D69D8B-C546-4E9F-8355-AAFC206DBBD2} = {AF6E5694-8BD6-4E50-AF1D-33141EA552FC}
 		{687AACC9-8B3B-4B58-B6F5-28F58133D09E} = {60DC6F9B-7C4A-4859-9539-E5E00C896BDC}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
@@ -25,10 +22,6 @@ Global
 		{F936F616-F4B0-4364-80D3-4CF7F146CDCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F936F616-F4B0-4364-80D3-4CF7F146CDCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F936F616-F4B0-4364-80D3-4CF7F146CDCE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{66D69D8B-C546-4E9F-8355-AAFC206DBBD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{66D69D8B-C546-4E9F-8355-AAFC206DBBD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{66D69D8B-C546-4E9F-8355-AAFC206DBBD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{66D69D8B-C546-4E9F-8355-AAFC206DBBD2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{687AACC9-8B3B-4B58-B6F5-28F58133D09E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{687AACC9-8B3B-4B58-B6F5-28F58133D09E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{687AACC9-8B3B-4B58-B6F5-28F58133D09E}.Release|Any CPU.ActiveCfg = Release|Any CPU
