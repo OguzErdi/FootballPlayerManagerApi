@@ -4,7 +4,7 @@ namespace FootballPlayerManagerApi.Services.Interfaces;
 
 public interface IPlayerService
 {
-    public Player GetPlayer(string id);
+    public Task<Player> GetPlayer(string id);
 
     public bool UpdatePlayer(string id);
 }

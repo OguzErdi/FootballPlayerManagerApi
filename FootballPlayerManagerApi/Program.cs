@@ -1,8 +1,10 @@
+using FootballPlayerManagerApi.ConfigOptions;
+using FootballPlayerManagerApi.CouchbaseProviders.Implementations;
+using FootballPlayerManagerApi.CouchbaseProviders.Interfaces;
 using FootballPlayerManagerApi.Repositories.Implementations;
 using FootballPlayerManagerApi.Repositories.Interfaces;
 using FootballPlayerManagerApi.Services.Implementations;
 using FootballPlayerManagerApi.Services.Interfaces;
-using FootballPlayerManagerApi.Services.PlayersService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,8 +15,12 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.Configure<CouchbaseOptions>(builder.Configuration.GetSection("CouchbaseOptions"));
+
 
 // Add Application Service
+builder.Services.AddSingleton<ICouchbaseProvider, CouchbaseProvider>();
+builder.Services.AddSingleton<IFootballBucketProvider, FootballBucketProvider>();
 builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
 builder.Services.AddScoped<ITeamRepository, TeamRepository>();

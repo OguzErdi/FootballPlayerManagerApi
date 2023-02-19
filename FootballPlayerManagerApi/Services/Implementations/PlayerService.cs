@@ -14,9 +14,9 @@ public class PlayerService : IPlayerService
         _playerRepository = playerRepository;
     }
 
-    public Player GetPlayer(string id)
+    public async Task<Player> GetPlayer(string id)
     {
-        return _playerRepository.GetPlayer(id);
+        return await _playerRepository.GetPlayer(id);
     }
 
     public bool UpdatePlayer(string id)

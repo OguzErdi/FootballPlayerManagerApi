@@ -19,10 +19,10 @@ public class PlayersController : ControllerBase
     }
 
     [HttpGet, Route("")]
-    public IActionResult GetPlayer(string id)
+    public async Task<IActionResult> GetPlayer(string id)
     {
-        var player = _playerService.GetPlayer(id);
-        return Ok(true);
+        var player = await _playerService.GetPlayer(id);
+        return Ok(player);
     }
 
     [HttpPut, Route("")]
