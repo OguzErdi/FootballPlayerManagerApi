@@ -1,6 +1,8 @@
+using AutoMapper;
 using FootballPlayerManagerApi.ConfigOptions;
 using FootballPlayerManagerApi.Couchbase.Providers.Implementations;
 using FootballPlayerManagerApi.Couchbase.Providers.Interfaces;
+using FootballPlayerManagerApi.Helpers;
 using FootballPlayerManagerApi.Repositories.Implementations;
 using FootballPlayerManagerApi.Repositories.Interfaces;
 using FootballPlayerManagerApi.Services.Implementations;
@@ -26,6 +28,11 @@ builder.Services.AddScoped<IPlayerService, PlayerService>();
 builder.Services.AddScoped<ITeamRepository, TeamRepository>();
 builder.Services.AddScoped<ITeamService, TeamService>();
 
+//AutoMapper
+var mappingConfig = new MapperConfiguration(mc => { mc.AddProfile(new FootballPlayerManagerApiMapper()); });
+var mapper = mappingConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -42,9 +49,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
-// ReSharper disable once ClassNeverInstantiated.Global
-namespace FootballPlayerManagerApi
-{
-    public partial class Program { }
-}

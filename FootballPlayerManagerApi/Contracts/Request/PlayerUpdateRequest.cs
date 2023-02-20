@@ -1,9 +1,9 @@
+namespace FootballPlayerManagerApi.Contracts.Request;
 
-namespace FootballPlayerManagerApi.Entities;
-
-public record Player
+public record PlayerUpdateRequest
 {
     public string Name { get; set; }
+    // in cm
     public int Height { get; set; }
     public int Age { get; set; }
 }

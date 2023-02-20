@@ -30,9 +30,17 @@ public class PlayerRepository : IPlayerRepository
         }
     }
 
-    public bool UpdatePlayerAsync(string id)
+    public async Task<bool> IsPlayerExist(string id)
     {
-        throw new NotImplementedException();
+        var collection = await GetCollection();
+        var getResult = await collection.ExistsAsync(id);
+        return getResult.Exists;
+    }
+
+    public async Task UpdatePlayerAsync(string id, Player player)
+    {
+        var collection = await GetCollection();
+        await collection.ReplaceAsync(id, player);
     }
 
     private async Task<ICouchbaseCollection> GetCollection()

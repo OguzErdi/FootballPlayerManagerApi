@@ -1,5 +1,11 @@
+using FluentValidation.Results;
+using FootballPlayerManagerApi.Constants;
+using FootballPlayerManagerApi.Contracts;
+using FootballPlayerManagerApi.Contracts.Request;
+using FootballPlayerManagerApi.Helpers;
 using FootballPlayerManagerApi.Services.Implementations;
 using FootballPlayerManagerApi.Services.Interfaces;
+using FootballPlayerManagerApi.Validators;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FootballPlayerManagerApi.Controllers;
@@ -20,14 +26,32 @@ public class PlayersController : ControllerBase
     [HttpGet, Route("")]
     public async Task<IActionResult> GetPlayer(string id)
     {
-        var player = await _playerService.GetPlayerAsync(id);
-        return Ok(player);
+        var response = await _playerService.GetPlayerAsync(id);
+
+        if (response.ErrorMessage == ErrorMessages.PlayerNotFound) return NotFound(response);
+
+        return Ok(response);
     }
 
     [HttpPut, Route("")]
-    public IActionResult UpdatePlayer(string id)
+    public async Task<IActionResult> UpdatePlayer(string id, [FromBody] PlayerUpdateRequest request)
     {
-        var player = _playerService.UpdatePlayerAsync(id);
-        return Ok(true);
+        var requestValidator = new UpdatePlayerRequestValidator();
+        var validationResult = await requestValidator.ValidateAsync(request);
+
+        if (!validationResult.IsValid)
+        {
+            var baseResponse = ServiceResponseHelper.CreateServiceResponseWithValidationResult<bool>(validationResult);
+            return BadRequest(baseResponse);
+        }
+        
+        var response = await _playerService.UpdatePlayerAsync(id, request);
+
+        if (response.HasError && response.ErrorMessage.Equals(ErrorMessages.PlayerNotFound))
+        {
+            return NotFound(response);
+        }
+
+        return Ok(response);
     }
 }

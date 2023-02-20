@@ -21,11 +21,11 @@ public class TeamService : ITeamService
 
     public bool AddPlayerToTeamAsync(string id)
     {
-        return _teamsService.AddPlayerToTeamAsync(id);
+        throw new NotImplementedException();
     }
 
     public bool DeletePlayerFromTeamAsync(string id)
     {
-        return _teamsService.DeletePlayerFromTeamAsync(id);
+        throw new NotImplementedException();
     }
 }

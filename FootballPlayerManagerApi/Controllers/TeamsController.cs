@@ -20,23 +20,20 @@ public class TeamsController : ControllerBase
     [HttpGet, Route("players")]
     public IActionResult GetTeamsPlayers(string id)
     {
-        var players = _teamService.GetTeamsPlayersAsync(id);
-        return Ok(true);
+        throw new NotImplementedException();
     }
 
     [HttpPut, Route("player")]
     public IActionResult AddPlayerToTeam(string id)
     {
         
-        var result = _teamService.AddPlayerToTeamAsync(id);
-        return Ok(true);
+        throw new NotImplementedException();
     }
 
     [HttpDelete, Route("player")]
     public IActionResult DeletePlayerFromTeam(string id)
     {
         
-        var result = _teamService.DeletePlayerFromTeamAsync(id);
-        return Ok(true);
+        throw new NotImplementedException();
     }
 }
