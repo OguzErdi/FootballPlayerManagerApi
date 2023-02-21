@@ -7,6 +7,7 @@ using FootballPlayerManagerApi.Repositories.Implementations;
 using FootballPlayerManagerApi.Repositories.Interfaces;
 using FootballPlayerManagerApi.Services.Implementations;
 using FootballPlayerManagerApi.Services.Interfaces;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,10 +34,9 @@ var mappingConfig = new MapperConfiguration(mc => { mc.AddProfile(new FootballPl
 var mapper = mappingConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
 
-// Logger
-builder.Logging.ClearProviders();
-builder.Logging.AddConsole();
-
+// Serilog
+Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
+builder.Host.UseSerilog();
 
 var app = builder.Build();
 
@@ -46,6 +46,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Serilog Request Logging
+app.UseSerilogRequestLogging(); 
 
 app.UseHttpsRedirection();
 
