@@ -45,8 +45,14 @@ public class TeamsController : ControllerBase
     }
 
     [HttpDelete, Route("player/{playerId}")]
-    public IActionResult DeletePlayerFromTeam(string id, string playerId)
+    public async Task<IActionResult> DeletePlayerFromTeam(string id, string playerId)
     {
-        throw new NotImplementedException();
+        var response = await _teamService.DeletePlayerFromTeamAsync(id, playerId);
+        if (response.HasError && response.ErrorMessage.Equals(ErrorMessages.TeamNotFound))
+        {
+            return NotFound(response);
+        }
+
+        return Ok(response);
     }
 }

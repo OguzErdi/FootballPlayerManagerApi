@@ -1,6 +1,6 @@
 namespace FootballPlayerManagerApi.Helpers;
 
-public static class StringHelpers
+public static class StringExtensions
 {
     public static string ToJsonFormat(this string value)
     {

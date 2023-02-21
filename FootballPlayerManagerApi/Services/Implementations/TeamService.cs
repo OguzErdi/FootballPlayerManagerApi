@@ -93,8 +93,30 @@ public class TeamService : ITeamService
         return serviceResponse;
     }
 
-    public Task<ServiceResponse<bool>> DeletePlayerFromTeamAsync(string id)
+    public async Task<ServiceResponse<bool>> DeletePlayerFromTeamAsync(string id, string playerId)
     {
-        throw new NotImplementedException();
+        ServiceResponse<bool> serviceResponse = new();
+
+        // I don't prefer to check if player exist in the player-collection
+        var isTeamExist = await _teamRepository.IsTeamExist(id);
+        if (!isTeamExist)
+        {
+            serviceResponse.ErrorMessage = ErrorMessages.TeamNotFound;
+            return serviceResponse;
+        }
+        
+        try
+        {
+            await _teamRepository.DeletePlayerFromTeamAsync(id, playerId);
+        }
+        catch (Exception exception)
+        {
+            _logger.LogError("Exception: {Exception}", exception);
+            serviceResponse.ErrorMessage = ErrorMessages.ProcessFailed;
+            return serviceResponse;
+        }
+        
+        serviceResponse.Data = true;
+        return serviceResponse;
     }
 }

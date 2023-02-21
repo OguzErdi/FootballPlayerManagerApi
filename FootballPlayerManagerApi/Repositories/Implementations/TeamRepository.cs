@@ -25,9 +25,25 @@ public class TeamRepository : ITeamRepository
         );
     }
 
-    public bool DeletePlayerFromTeamAsync(object id)
+    public async Task DeletePlayerFromTeamAsync(string id, string playerId)
     {
-        throw new NotImplementedException();
+        var collection = await GetCollection();
+        var playerIds = await GetPlayerIdsFromTeam(id);
+
+        playerIds.Remove(playerId);
+
+        await collection.MutateInAsync(id, specs =>
+            specs.Replace(nameof(Team.PlayerIds).ToJsonFormat(), playerIds));
+    }
+
+    public async Task<List<string>?> GetPlayerIdsFromTeam(string id)
+    {
+        var collection = await GetCollection();
+        var playerIdsResult = await collection.LookupInAsync(id, specs =>
+            specs.Get(nameof(Team.PlayerIds).ToJsonFormat()));
+
+        var playerIds = playerIdsResult.ContentAs<List<string>>(0);
+        return playerIds;
     }
 
     public async Task<Team> GetTeamAsync(string id)
@@ -43,7 +59,7 @@ public class TeamRepository : ITeamRepository
             return null;
         }
     }
-    
+
     public async Task<bool> IsTeamExist(string id)
     {
         var collection = await GetCollection();

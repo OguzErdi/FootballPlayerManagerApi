@@ -55,6 +55,6 @@ public record ErrorMessages
     public static ErrorMessage ProcessFailed => new()
     {
         Code = "ProcessFailed",
-        Message = "Process failed, Contact with the owners. "
+        Message = "Process failed, Contact with the owners"
     };
 }
