@@ -1,3 +1,4 @@
+using FootballPlayerManagerApi.Constants;
 using FootballPlayerManagerApi.Services.Implementations;
 using FootballPlayerManagerApi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -18,22 +19,28 @@ public class TeamsController : ControllerBase
     }
 
     [HttpGet, Route("players")]
-    public IActionResult GetTeamsPlayers(string id)
+    public async Task<IActionResult> GetTeamsPlayers(string id)
     {
-        throw new NotImplementedException();
+        var response = await _teamService.GetTeamsPlayersAsync(id);
+
+        if (response.HasError && response.ErrorMessage.Equals(ErrorMessages.TeamNotFound) &&
+            response.ErrorMessage.Equals(ErrorMessages.TeamNotHavePlayers))
+        {
+            return NotFound(response);
+        }
+
+        return Ok(response);
     }
 
     [HttpPut, Route("player")]
     public IActionResult AddPlayerToTeam(string id)
     {
-        
         throw new NotImplementedException();
     }
 
     [HttpDelete, Route("player")]
     public IActionResult DeletePlayerFromTeam(string id)
     {
-        
         throw new NotImplementedException();
     }
 }

@@ -5,7 +5,7 @@ namespace FootballPlayerManagerApi.Services.Interfaces;
 
 public interface ITeamService
 {
-    Task<ServiceResponse<IEnumerable<Player>>> GetTeamsPlayersAsync(string id);
+    Task<ServiceResponse<List<string>>> GetTeamsPlayersAsync(string id);
     bool AddPlayerToTeamAsync(string id);
     bool DeletePlayerFromTeamAsync(string id);
 }

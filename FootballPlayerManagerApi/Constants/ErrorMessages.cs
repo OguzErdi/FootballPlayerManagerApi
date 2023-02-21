@@ -39,4 +39,16 @@ public record ErrorMessages
         Code = "AgeNotValid",
         Message = "Age is must range from 0 to 150 years"
     };
+
+    public static ErrorMessage TeamNotFound => new()
+    {
+        Code = "TeamNotFound",
+        Message = "Team not found"
+    };
+
+    public static ErrorMessage TeamNotHavePlayers => new()
+    {
+        Code = "TeamNotHavePlayers",
+        Message = "Team doesn't have players"
+    };
 }

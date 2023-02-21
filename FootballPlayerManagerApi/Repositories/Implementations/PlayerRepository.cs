@@ -8,7 +8,7 @@ namespace FootballPlayerManagerApi.Repositories.Implementations;
 
 public class PlayerRepository : IPlayerRepository
 {
-    public const string PlayerCollectionName = "player-collection";
+    private const string PlayerCollectionName = "player-collection";
     private readonly IFootballProvider _footballProvider;
 
     public PlayerRepository(IFootballProvider footballProvider)
