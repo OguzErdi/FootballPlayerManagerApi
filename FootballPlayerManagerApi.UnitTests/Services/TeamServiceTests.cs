@@ -5,6 +5,7 @@ using FootballPlayerManagerApi.Constants;
 using FootballPlayerManagerApi.Entities;
 using FootballPlayerManagerApi.Repositories.Interfaces;
 using FootballPlayerManagerApi.Services.Implementations;
+using Microsoft.Extensions.Logging;
 using Moq;
 
 namespace FootballPlayerManagerApi.UnitTests.Services;
@@ -15,6 +16,7 @@ public class TeamServiceTests
     private Mock<ITeamRepository> _teamRepository;
     private Mock<IPlayerRepository> _playerRepository;
     private Mock<IMapper> _mapper;
+    private Mock<ILogger<TeamService>> _logger;
     private TeamService _sut;
 
     [SetUp]
@@ -24,8 +26,9 @@ public class TeamServiceTests
         _playerRepository = new Mock<IPlayerRepository>();
         _teamRepository = new Mock<ITeamRepository>();
         _mapper = new Mock<IMapper>();
+        _logger = new Mock<ILogger<TeamService>>();
 
-        _sut = new TeamService(_teamRepository.Object, _playerRepository.Object, _mapper.Object);
+        _sut = new TeamService(_teamRepository.Object, _playerRepository.Object, _mapper.Object, _logger.Object);
     }
 
     [Test]
@@ -50,7 +53,7 @@ public class TeamServiceTests
         var team = _fixture.Build<Team>()
             .With(x => x.PlayerIds, new List<string>())
             .Create();
-        
+
         _teamRepository.Setup(x => x.GetTeamAsync(It.IsAny<string>())).ReturnsAsync(team);
 
         //Act
@@ -65,8 +68,8 @@ public class TeamServiceTests
     {
         //Arrange
         var id = _fixture.Create<string>();
-        var team = _fixture.Create<Team>();
         var player = _fixture.Create<Player>();
+        var team = _fixture.Create<Team>();
         _teamRepository.Setup(x => x.GetTeamAsync(It.IsAny<string>())).ReturnsAsync(team);
         _playerRepository.Setup(x => x.GetPlayerAsync(It.IsAny<string>())).ReturnsAsync(player);
 
@@ -75,5 +78,53 @@ public class TeamServiceTests
 
         //Verify
         response.Data.Should().BeOfType<List<string>>();
+    }
+
+    [Test]
+    public async Task AddPlayerToTeamAsync_WhenTeamNotFound_ShouldReturnError()
+    {
+        //Arrange
+        var id = _fixture.Create<string>();
+        _teamRepository.Setup(x => x.IsTeamExist(It.IsAny<string>())).ReturnsAsync(false);
+
+        //Act
+        var response = await _sut.GetTeamsPlayersAsync(id);
+
+        //Verify
+        response.ErrorMessage.Should().Be(ErrorMessages.TeamNotFound);
+    }
+
+    [Test]
+    public async Task AddPlayerToTeamAsync_WhenPlayerNotFound_ShouldReturnError()
+    {
+        //Arrange
+        var id = _fixture.Create<string>();
+        var playerId = _fixture.Create<string>();
+        _teamRepository.Setup(x => x.IsTeamExist(It.IsAny<string>())).ReturnsAsync(true);
+        _playerRepository.Setup(x => x.IsPlayerExist(It.IsAny<string>())).ReturnsAsync(false);
+
+        //Act
+        var response = await _sut.AddPlayerToTeamAsync(id, playerId);
+
+        //Verify
+        response.ErrorMessage.Should().Be(ErrorMessages.PlayerNotFound);
+    }
+    
+    [Test]
+    public async Task AddPlayerToTeamAsync_TrueStory()
+    {
+        //Arrange
+        var id = _fixture.Create<string>();
+        var playerId = _fixture.Create<string>();
+        _teamRepository.Setup(x => x.IsTeamExist(It.IsAny<string>())).ReturnsAsync(true);
+        _playerRepository.Setup(x => x.IsPlayerExist(It.IsAny<string>())).ReturnsAsync(true);
+        _teamRepository.Setup(x => x.AddPlayerToTeamAsync(It.IsAny<string>(), It.IsAny<string>())).Callback(() => {})
+            .Returns(Task.CompletedTask);
+
+        //Act
+        var response = await _sut.AddPlayerToTeamAsync(id, playerId);
+
+        //Verify
+        response.Data.Should().Be(true);
     }
 }

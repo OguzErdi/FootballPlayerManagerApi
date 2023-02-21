@@ -51,4 +51,10 @@ public record ErrorMessages
         Code = "TeamNotHavePlayers",
         Message = "Team doesn't have players"
     };
+
+    public static ErrorMessage ProcessFailed => new()
+    {
+        Code = "ProcessFailed",
+        Message = "Process failed, Contact with the owners. "
+    };
 }

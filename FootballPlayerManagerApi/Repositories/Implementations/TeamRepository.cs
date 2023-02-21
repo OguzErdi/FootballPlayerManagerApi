@@ -2,6 +2,7 @@ using Couchbase.Core.Exceptions.KeyValue;
 using Couchbase.KeyValue;
 using FootballPlayerManagerApi.Couchbase.Providers.Interfaces;
 using FootballPlayerManagerApi.Entities;
+using FootballPlayerManagerApi.Helpers;
 using FootballPlayerManagerApi.Repositories.Interfaces;
 
 namespace FootballPlayerManagerApi.Repositories.Implementations;
@@ -16,14 +17,12 @@ public class TeamRepository : ITeamRepository
         _footballProvider = footballProvider;
     }
 
-    public Task<IEnumerable<Player>> GetTeamsPlayersAsync(string id)
+    public async Task AddPlayerToTeamAsync(string id, string playerId)
     {
-        throw new NotImplementedException();
-    }
-
-    public bool AddPlayerToTeamAsync(string id)
-    {
-        throw new NotImplementedException();
+        var collection = await GetCollection();
+        await collection.MutateInAsync(id, specs =>
+            specs.ArrayPrepend(nameof(Team.PlayerIds).ToJsonFormat(), new[] { playerId })
+        );
     }
 
     public bool DeletePlayerFromTeamAsync(object id)
@@ -43,6 +42,13 @@ public class TeamRepository : ITeamRepository
         {
             return null;
         }
+    }
+    
+    public async Task<bool> IsTeamExist(string id)
+    {
+        var collection = await GetCollection();
+        var getResult = await collection.ExistsAsync(id);
+        return getResult.Exists;
     }
 
     private async Task<ICouchbaseCollection> GetCollection()

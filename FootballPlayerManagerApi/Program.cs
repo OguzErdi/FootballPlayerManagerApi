@@ -28,10 +28,15 @@ builder.Services.AddScoped<IPlayerService, PlayerService>();
 builder.Services.AddScoped<ITeamRepository, TeamRepository>();
 builder.Services.AddScoped<ITeamService, TeamService>();
 
-//AutoMapper
+// AutoMapper
 var mappingConfig = new MapperConfiguration(mc => { mc.AddProfile(new FootballPlayerManagerApiMapper()); });
 var mapper = mappingConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
+
+// Logger
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+
 
 var app = builder.Build();
 

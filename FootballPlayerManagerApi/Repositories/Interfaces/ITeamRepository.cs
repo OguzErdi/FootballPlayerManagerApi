@@ -4,8 +4,8 @@ namespace FootballPlayerManagerApi.Repositories.Interfaces;
 
 public interface ITeamRepository
 {
-    Task<IEnumerable<Player>> GetTeamsPlayersAsync(string id);
-    bool AddPlayerToTeamAsync(string id);
+    Task AddPlayerToTeamAsync(string id, string playerId);
     bool DeletePlayerFromTeamAsync(object id);
     Task<Team> GetTeamAsync(string id);
+    Task<bool> IsTeamExist(string id);
 }

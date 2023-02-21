@@ -12,12 +12,15 @@ public class TeamService : ITeamService
     private readonly ITeamRepository _teamRepository;
     private readonly IPlayerRepository _playerRepository;
     private readonly IMapper _mapper;
+    private readonly ILogger<TeamService> _logger;
 
-    public TeamService(ITeamRepository teamRepository, IPlayerRepository playerRepository, IMapper mapper)
+    public TeamService(ITeamRepository teamRepository, IPlayerRepository playerRepository, IMapper mapper,
+        ILogger<TeamService> logger)
     {
         _teamRepository = teamRepository;
         _playerRepository = playerRepository;
         _mapper = mapper;
+        _logger = logger;
     }
 
     public async Task<ServiceResponse<List<string>>> GetTeamsPlayersAsync(string id)
@@ -56,12 +59,41 @@ public class TeamService : ITeamService
         return playerNames;
     }
 
-    public bool AddPlayerToTeamAsync(string id)
+    public async Task<ServiceResponse<bool>> AddPlayerToTeamAsync(string id, string playerId)
     {
-        throw new NotImplementedException();
+        ServiceResponse<bool> serviceResponse = new();
+
+        var isTeamExist = await _teamRepository.IsTeamExist(id);
+        if (!isTeamExist)
+        {
+            serviceResponse.ErrorMessage = ErrorMessages.TeamNotFound;
+            return serviceResponse;
+        }
+
+        var isPlayerExist = await _playerRepository.IsPlayerExist(playerId);
+        if (!isPlayerExist)
+        {
+            serviceResponse.ErrorMessage = ErrorMessages.PlayerNotFound;
+            return serviceResponse;
+        }
+
+        try
+        {
+            await _teamRepository.AddPlayerToTeamAsync(id, playerId);
+        }
+        catch (Exception exception)
+        {
+            _logger.LogError("Exception: {Exception}", exception);
+            serviceResponse.ErrorMessage = ErrorMessages.ProcessFailed;
+            return serviceResponse;
+        }
+
+
+        serviceResponse.Data = true;
+        return serviceResponse;
     }
 
-    public bool DeletePlayerFromTeamAsync(string id)
+    public Task<ServiceResponse<bool>> DeletePlayerFromTeamAsync(string id)
     {
         throw new NotImplementedException();
     }

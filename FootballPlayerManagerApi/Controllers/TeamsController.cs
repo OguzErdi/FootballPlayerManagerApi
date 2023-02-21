@@ -22,7 +22,6 @@ public class TeamsController : ControllerBase
     public async Task<IActionResult> GetTeamsPlayers(string id)
     {
         var response = await _teamService.GetTeamsPlayersAsync(id);
-
         if (response.HasError && response.ErrorMessage.Equals(ErrorMessages.TeamNotFound) &&
             response.ErrorMessage.Equals(ErrorMessages.TeamNotHavePlayers))
         {
@@ -32,14 +31,21 @@ public class TeamsController : ControllerBase
         return Ok(response);
     }
 
-    [HttpPut, Route("player")]
-    public IActionResult AddPlayerToTeam(string id)
+    [HttpPut, Route("player/{playerId}")]
+    public async Task<IActionResult> AddPlayerToTeam(string id, string playerId)
     {
-        throw new NotImplementedException();
+        var response = await _teamService.AddPlayerToTeamAsync(id, playerId);
+        if (response.HasError && response.ErrorMessage.Equals(ErrorMessages.PlayerNotFound) &&
+            response.ErrorMessage.Equals(ErrorMessages.TeamNotFound))
+        {
+            return NotFound(response);
+        }
+
+        return Ok(response);
     }
 
-    [HttpDelete, Route("player")]
-    public IActionResult DeletePlayerFromTeam(string id)
+    [HttpDelete, Route("player/{playerId}")]
+    public IActionResult DeletePlayerFromTeam(string id, string playerId)
     {
         throw new NotImplementedException();
     }
