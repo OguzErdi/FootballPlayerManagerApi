@@ -22,37 +22,36 @@ public class TeamsController : ControllerBase
     public async Task<IActionResult> GetTeamsPlayers(string id)
     {
         var response = await _teamService.GetTeamsPlayersAsync(id);
-        if (response.HasError && response.ErrorMessage.Equals(ErrorMessages.TeamNotFound) &&
-            response.ErrorMessage.Equals(ErrorMessages.TeamNotHavePlayers))
+        return response.HasError switch
         {
-            return NotFound(response);
-        }
-
-        return Ok(response);
+            true when response.ErrorMessage.Equals(ErrorMessages.TeamNotFound) ||
+                      response.ErrorMessage.Equals(ErrorMessages.TeamNotHavePlayers) => NotFound(response),
+            _ => Ok(response)
+        };
     }
 
     [HttpPut, Route("player/{playerId}")]
     public async Task<IActionResult> AddPlayerToTeam(string id, string playerId)
     {
         var response = await _teamService.AddPlayerToTeamAsync(id, playerId);
-        if (response.HasError && response.ErrorMessage.Equals(ErrorMessages.PlayerNotFound) &&
-            response.ErrorMessage.Equals(ErrorMessages.TeamNotFound))
+        return response.HasError switch
         {
-            return NotFound(response);
-        }
-
-        return Ok(response);
+            true when response.ErrorMessage.Equals(ErrorMessages.PlayerNotFound) ||
+                      response.ErrorMessage.Equals(ErrorMessages.TeamNotFound) => NotFound(response),
+            true when response.ErrorMessage.Equals(ErrorMessages.ProcessFailed) => StatusCode(500, response),
+            _ => Ok(response)
+        };
     }
 
     [HttpDelete, Route("player/{playerId}")]
     public async Task<IActionResult> DeletePlayerFromTeam(string id, string playerId)
     {
         var response = await _teamService.DeletePlayerFromTeamAsync(id, playerId);
-        if (response.HasError && response.ErrorMessage.Equals(ErrorMessages.TeamNotFound))
+        return response.HasError switch
         {
-            return NotFound(response);
-        }
-
-        return Ok(response);
+            true when response.ErrorMessage.Equals(ErrorMessages.TeamNotFound) => NotFound(response),
+            true when response.ErrorMessage.Equals(ErrorMessages.ProcessFailed) => StatusCode(500, response),
+            _ => Ok(response)
+        };
     }
 }

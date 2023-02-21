@@ -42,16 +42,15 @@ public class PlayersController : ControllerBase
         if (!validationResult.IsValid)
         {
             var baseResponse = ServiceResponseHelper.CreateServiceResponseWithValidationResult<bool>(validationResult);
-            return BadRequest(baseResponse);
+            return UnprocessableEntity(baseResponse);
         }
         
         var response = await _playerService.UpdatePlayerAsync(id, request);
 
-        if (response.HasError && response.ErrorMessage.Equals(ErrorMessages.PlayerNotFound))
+        return response.HasError switch
         {
-            return NotFound(response);
-        }
-
-        return Ok(response);
+            true when response.ErrorMessage.Equals(ErrorMessages.PlayerNotFound) => NotFound(response),
+            _ => Ok(response)
+        };
     }
 }
