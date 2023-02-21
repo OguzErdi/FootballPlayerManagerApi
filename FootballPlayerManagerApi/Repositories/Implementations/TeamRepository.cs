@@ -17,21 +17,9 @@ public class TeamRepository : ITeamRepository
         _footballProvider = footballProvider;
     }
 
-    public async Task AddPlayerToTeamAsync(string id, string playerId)
+    public async Task UpdatePlayerIdsOnTeam(string id, List<string> playerIds)
     {
         var collection = await GetCollection();
-        await collection.MutateInAsync(id, specs =>
-            specs.ArrayPrepend(nameof(Team.PlayerIds).ToJsonFormat(), new[] { playerId })
-        );
-    }
-
-    public async Task DeletePlayerFromTeamAsync(string id, string playerId)
-    {
-        var collection = await GetCollection();
-        var playerIds = await GetPlayerIdsFromTeam(id);
-
-        playerIds.Remove(playerId);
-
         await collection.MutateInAsync(id, specs =>
             specs.Replace(nameof(Team.PlayerIds).ToJsonFormat(), playerIds));
     }

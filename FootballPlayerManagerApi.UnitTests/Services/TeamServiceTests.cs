@@ -117,9 +117,11 @@ public class TeamServiceTests
         //Arrange
         var id = _fixture.Create<string>();
         var playerId = _fixture.Create<string>();
+        var playerIds = _fixture.Create<List<string>>();
         _teamRepository.Setup(x => x.IsTeamExist(It.IsAny<string>())).ReturnsAsync(true);
         _playerRepository.Setup(x => x.IsPlayerExist(It.IsAny<string>())).ReturnsAsync(true);
-        _teamRepository.Setup(x => x.AddPlayerToTeamAsync(It.IsAny<string>(), It.IsAny<string>())).Throws(new Exception());
+        _teamRepository.Setup(x => x.GetPlayerIdsFromTeam(It.IsAny<string>())).ReturnsAsync(playerIds);
+        _teamRepository.Setup(x => x.UpdatePlayerIdsOnTeam(It.IsAny<string>(), It.IsAny<List<string>>())).Throws(new Exception());
 
         //Act
         var response = await _sut.AddPlayerToTeamAsync(id, playerId);
@@ -134,9 +136,11 @@ public class TeamServiceTests
         //Arrange
         var id = _fixture.Create<string>();
         var playerId = _fixture.Create<string>();
+        var playerIds = _fixture.Create<List<string>>();
         _teamRepository.Setup(x => x.IsTeamExist(It.IsAny<string>())).ReturnsAsync(true);
         _playerRepository.Setup(x => x.IsPlayerExist(It.IsAny<string>())).ReturnsAsync(true);
-        _teamRepository.Setup(x => x.AddPlayerToTeamAsync(It.IsAny<string>(), It.IsAny<string>())).Callback(() => {})
+        _teamRepository.Setup(x => x.GetPlayerIdsFromTeam(It.IsAny<string>())).ReturnsAsync(playerIds);
+        _teamRepository.Setup(x => x.UpdatePlayerIdsOnTeam(It.IsAny<string>(), It.IsAny<List<string>>())).Callback(() => {})
             .Returns(Task.CompletedTask);
 
         //Act
@@ -168,7 +172,7 @@ public class TeamServiceTests
         var id = _fixture.Create<string>();
         var playerId = _fixture.Create<string>();
         _teamRepository.Setup(x => x.IsTeamExist(It.IsAny<string>())).ReturnsAsync(true);
-        _teamRepository.Setup(x => x.DeletePlayerFromTeamAsync(It.IsAny<string>(), It.IsAny<string>())).Throws(new Exception());
+        _teamRepository.Setup(x => x.UpdatePlayerIdsOnTeam(It.IsAny<string>(), It.IsAny<List<string>>())).Throws(new Exception());
         //Act
         var response = await _sut.DeletePlayerFromTeamAsync(id, playerId);
 
@@ -183,7 +187,7 @@ public class TeamServiceTests
         var id = _fixture.Create<string>();
         var playerId = _fixture.Create<string>();
         _teamRepository.Setup(x => x.IsTeamExist(It.IsAny<string>())).ReturnsAsync(true);
-        _teamRepository.Setup(x => x.DeletePlayerFromTeamAsync(It.IsAny<string>(), It.IsAny<string>())).Callback(() => {})
+        _teamRepository.Setup(x => x.UpdatePlayerIdsOnTeam(It.IsAny<string>(), It.IsAny<List<string>>())).Callback(() => {})
             .Returns(Task.CompletedTask);
 
         //Act

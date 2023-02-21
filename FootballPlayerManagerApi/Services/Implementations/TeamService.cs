@@ -76,10 +76,18 @@ public class TeamService : ITeamService
             serviceResponse.ErrorMessage = ErrorMessages.PlayerNotFound;
             return serviceResponse;
         }
+        
+        var playerIds = await _teamRepository.GetPlayerIdsFromTeam(id);
+
+        // to make method idempotent, don't return error if player already added
+        if (!playerIds.Contains(playerId))
+        {
+            playerIds.Add(playerId);
+        }
 
         try
         {
-            await _teamRepository.AddPlayerToTeamAsync(id, playerId);
+            await _teamRepository.UpdatePlayerIdsOnTeam(id, playerIds);
         }
         catch (Exception exception)
         {
@@ -87,8 +95,7 @@ public class TeamService : ITeamService
             serviceResponse.ErrorMessage = ErrorMessages.ProcessFailed;
             return serviceResponse;
         }
-
-
+        
         serviceResponse.Data = true;
         return serviceResponse;
     }
@@ -105,9 +112,12 @@ public class TeamService : ITeamService
             return serviceResponse;
         }
         
+        var playerIds = await _teamRepository.GetPlayerIdsFromTeam(id);
+        playerIds?.Remove(playerId);
+        
         try
         {
-            await _teamRepository.DeletePlayerFromTeamAsync(id, playerId);
+            await _teamRepository.UpdatePlayerIdsOnTeam(id, playerIds);
         }
         catch (Exception exception)
         {
