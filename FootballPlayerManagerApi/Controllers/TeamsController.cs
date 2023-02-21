@@ -1,7 +1,10 @@
+using System.Net;
 using FootballPlayerManagerApi.Constants;
-using FootballPlayerManagerApi.Services.Implementations;
+using FootballPlayerManagerApi.Contracts;
+using FootballPlayerManagerApi.Entities;
 using FootballPlayerManagerApi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace FootballPlayerManagerApi.Controllers;
 
@@ -10,15 +13,16 @@ namespace FootballPlayerManagerApi.Controllers;
 public class TeamsController : ControllerBase
 {
     private readonly ITeamService _teamService;
-    private readonly ILogger<TeamsController> _logger;
 
-    public TeamsController(ILogger<TeamsController> logger, ITeamService teamService)
+    public TeamsController(ITeamService teamService)
     {
-        _logger = logger;
         _teamService = teamService;
     }
 
     [HttpGet, Route("players")]
+    [SwaggerResponse((int)HttpStatusCode.OK, "Get team's player list", typeof(ServiceResponse<List<Player>>))]
+    [SwaggerResponse((int)HttpStatusCode.NotFound, "Return not found if team not found or player list is empty",
+        typeof(ServiceResponse<List<Player>>))]
     public async Task<IActionResult> GetTeamsPlayers(string id)
     {
         var response = await _teamService.GetTeamsPlayersAsync(id);
@@ -31,6 +35,11 @@ public class TeamsController : ControllerBase
     }
 
     [HttpPut, Route("player/{playerId}")]
+    [SwaggerResponse((int)HttpStatusCode.OK, "Add player to team", typeof(ServiceResponse<bool>))]
+    [SwaggerResponse((int)HttpStatusCode.NotFound, "Return not found if team or player not found",
+        typeof(ServiceResponse<bool>))]
+    [SwaggerResponse((int)HttpStatusCode.InternalServerError,
+        "Return internal server error if an unexpected exception throw", typeof(ServiceResponse<bool>))]
     public async Task<IActionResult> AddPlayerToTeam(string id, string playerId)
     {
         var response = await _teamService.AddPlayerToTeamAsync(id, playerId);
@@ -44,6 +53,10 @@ public class TeamsController : ControllerBase
     }
 
     [HttpDelete, Route("player/{playerId}")]
+    [SwaggerResponse((int)HttpStatusCode.OK, "Delete player from team", typeof(ServiceResponse<bool>))]
+    [SwaggerResponse((int)HttpStatusCode.NotFound, "Return not found if team not found", typeof(ServiceResponse<bool>))]
+    [SwaggerResponse((int)HttpStatusCode.InternalServerError,
+        "Return internal server error if an unexpected exception throw", typeof(ServiceResponse<bool>))]
     public async Task<IActionResult> DeletePlayerFromTeam(string id, string playerId)
     {
         var response = await _teamService.DeletePlayerFromTeamAsync(id, playerId);

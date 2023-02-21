@@ -17,7 +17,10 @@ builder.Services.AddControllers();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(config =>
+{
+    config.EnableAnnotations();
+});
 builder.Services.Configure<CouchbaseOptions>(builder.Configuration.GetSection("CouchbaseOptions"));
 
 

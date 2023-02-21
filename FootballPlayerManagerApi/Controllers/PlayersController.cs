@@ -1,12 +1,13 @@
-using FluentValidation.Results;
+using System.Net;
 using FootballPlayerManagerApi.Constants;
 using FootballPlayerManagerApi.Contracts;
 using FootballPlayerManagerApi.Contracts.Request;
+using FootballPlayerManagerApi.Entities;
 using FootballPlayerManagerApi.Helpers;
-using FootballPlayerManagerApi.Services.Implementations;
 using FootballPlayerManagerApi.Services.Interfaces;
 using FootballPlayerManagerApi.Validators;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace FootballPlayerManagerApi.Controllers;
 
@@ -15,15 +16,16 @@ namespace FootballPlayerManagerApi.Controllers;
 public class PlayersController : ControllerBase
 {
     private readonly IPlayerService _playerService;
-    private readonly ILogger<PlayersController> _logger;
 
-    public PlayersController(ILogger<PlayersController> logger, IPlayerService playerService)
+    public PlayersController(IPlayerService playerService)
     {
-        _logger = logger;
         _playerService = playerService;
     }
 
     [HttpGet, Route("")]
+    [SwaggerResponse((int)HttpStatusCode.OK, "Get player", typeof(ServiceResponse<Player>))]
+    [SwaggerResponse((int)HttpStatusCode.NotFound, "Return not found if player not found",
+        typeof(ServiceResponse<Player>))]
     public async Task<IActionResult> GetPlayer(string id)
     {
         var response = await _playerService.GetPlayerAsync(id);
@@ -34,6 +36,11 @@ public class PlayersController : ControllerBase
     }
 
     [HttpPut, Route("")]
+    [SwaggerResponse((int)HttpStatusCode.OK, "Update player", typeof(ServiceResponse<bool>))]
+    [SwaggerResponse((int)HttpStatusCode.UnprocessableEntity,
+        "Return unprocessable entity if request have validation errors", typeof(ServiceResponse<bool>))]
+    [SwaggerResponse((int)HttpStatusCode.NotFound, "Return not found if player not found",
+        typeof(ServiceResponse<bool>))]
     public async Task<IActionResult> UpdatePlayer(string id, [FromBody] PlayerUpdateRequest request)
     {
         var requestValidator = new UpdatePlayerRequestValidator();
@@ -44,7 +51,7 @@ public class PlayersController : ControllerBase
             var baseResponse = ServiceResponseHelper.CreateServiceResponseWithValidationResult<bool>(validationResult);
             return UnprocessableEntity(baseResponse);
         }
-        
+
         var response = await _playerService.UpdatePlayerAsync(id, request);
 
         return response.HasError switch
