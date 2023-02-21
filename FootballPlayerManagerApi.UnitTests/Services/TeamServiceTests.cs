@@ -77,7 +77,8 @@ public class TeamServiceTests
         var response = await _sut.GetTeamsPlayersAsync(id);
 
         //Verify
-        response.Data.Should().BeOfType<List<string>>();
+        response.Data.Should().BeOfType<List<Player>>();
+        response.Data.Should().HaveCountGreaterThan(0);
     }
 
     [Test]

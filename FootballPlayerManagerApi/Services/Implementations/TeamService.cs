@@ -23,9 +23,9 @@ public class TeamService : ITeamService
         _logger = logger;
     }
 
-    public async Task<ServiceResponse<List<string>>> GetTeamsPlayersAsync(string id)
+    public async Task<ServiceResponse<List<Player>>> GetTeamsPlayersAsync(string id)
     {
-        ServiceResponse<List<string>> serviceResponse = new();
+        ServiceResponse<List<Player>> serviceResponse = new();
 
         var team = await _teamRepository.GetTeamAsync(id);
         if (team is null)
@@ -34,7 +34,7 @@ public class TeamService : ITeamService
             return serviceResponse;
         }
 
-        var playerNames = await GetPlayerNames(team);
+        var playerNames = await GetPlayerNamesAsync(team);
         if (!playerNames.Any())
         {
             serviceResponse.ErrorMessage = ErrorMessages.TeamNotHavePlayers;
@@ -46,14 +46,14 @@ public class TeamService : ITeamService
         return serviceResponse;
     }
 
-    private async Task<List<string>> GetPlayerNames(Team team)
+    private async Task<List<Player>> GetPlayerNamesAsync(Team team)
     {
-        var playerNames = new List<string>();
+        var playerNames = new List<Player>();
         foreach (var playerId in team.PlayerIds)
         {
             var player = await _playerRepository.GetPlayerAsync(playerId);
             //can return error if player not found, but this way we won't interrupt the call.
-            if (player is not null) playerNames.Add(player.Name);
+            if (player is not null) playerNames.Add(player);
         }
 
         return playerNames;
