@@ -1,0 +1,751 @@
+{
+	"info": {
+		"_postman_id": "7a25b75a-d81d-4fd6-bf89-60087846660b",
+		"name": "Football Player Manager Api Documentation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14876425"
+	},
+	"item": [
+		{
+			"name": "players/{id}",
+			"item": [
+				{
+					"name": "/players/:id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/plain"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/players/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"players",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "aute Duis",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get player",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "//players/:id",
+									"path": [
+										"",
+										"players",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "aute Duis",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"hasError\": true,\n  \"errorMessage\": {\n    \"code\": \"minim e\",\n    \"message\": \"labore exercitation\"\n  },\n  \"data\": {\n    \"name\": \"labore et\",\n    \"height\": -84064276,\n    \"age\": 62095153\n  }\n}"
+						},
+						{
+							"name": "Return not found if player not found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/players/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"players",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "aute Duis",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"hasError\": true,\n  \"errorMessage\": {\n    \"code\": \"minim e\",\n    \"message\": \"labore exercitation\"\n  },\n  \"data\": {\n    \"name\": \"labore et\",\n    \"height\": -84064276,\n    \"age\": 62095153\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "/players/:id",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "text/plain"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"esse sint do\",\n  \"height\": -22267317,\n  \"age\": -58496093\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/players/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"players",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "aute Duis",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update player",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"esse sint do\",\n  \"height\": -22267317,\n  \"age\": -58496093\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "//players/:id",
+									"path": [
+										"",
+										"players",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "aute Duis",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"hasError\": true,\n  \"errorMessage\": {\n    \"code\": \"officia laborum elit\",\n    \"message\": \"dolor nulla\"\n  },\n  \"data\": false\n}"
+						},
+						{
+							"name": "Return not found if player not found",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"esse sint do\",\n  \"height\": -22267317,\n  \"age\": -58496093\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/players/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"players",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "aute Duis",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"hasError\": true,\n  \"errorMessage\": {\n    \"code\": \"officia laborum elit\",\n    \"message\": \"dolor nulla\"\n  },\n  \"data\": false\n}"
+						},
+						{
+							"name": "Return unprocessable entity if request have validation errors",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"esse sint do\",\n  \"height\": -22267317,\n  \"age\": -58496093\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/players/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"players",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "aute Duis",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"hasError\": true,\n  \"errorMessage\": {\n    \"code\": \"officia laborum elit\",\n    \"message\": \"dolor nulla\"\n  },\n  \"data\": false\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "teams/{id}",
+			"item": [
+				{
+					"name": "player/{playerId}",
+					"item": [
+						{
+							"name": "/teams/:id/player/:playerId",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/teams/:id/player/:playerId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"teams",
+										":id",
+										"player",
+										":playerId"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "aute Duis",
+											"description": "(Required) "
+										},
+										{
+											"key": "playerId",
+											"value": "aute Duis",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Add player to team",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "//teams/:id/player/:playerId",
+											"path": [
+												"",
+												"teams",
+												":id",
+												"player",
+												":playerId"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "aute Duis",
+													"description": "(Required) "
+												},
+												{
+													"key": "playerId",
+													"value": "aute Duis",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"hasError\": true,\n  \"errorMessage\": {\n    \"code\": \"officia laborum elit\",\n    \"message\": \"dolor nulla\"\n  },\n  \"data\": false\n}"
+								},
+								{
+									"name": "Return not found if team or player not found",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/teams/:id/player/:playerId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"teams",
+												":id",
+												"player",
+												":playerId"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "aute Duis",
+													"description": "(Required) "
+												},
+												{
+													"key": "playerId",
+													"value": "aute Duis",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"hasError\": true,\n  \"errorMessage\": {\n    \"code\": \"officia laborum elit\",\n    \"message\": \"dolor nulla\"\n  },\n  \"data\": false\n}"
+								},
+								{
+									"name": "Return internal server error if an unexpected exception throw",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/teams/:id/player/:playerId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"teams",
+												":id",
+												"player",
+												":playerId"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "aute Duis",
+													"description": "(Required) "
+												},
+												{
+													"key": "playerId",
+													"value": "aute Duis",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"hasError\": true,\n  \"errorMessage\": {\n    \"code\": \"officia laborum elit\",\n    \"message\": \"dolor nulla\"\n  },\n  \"data\": false\n}"
+								}
+							]
+						},
+						{
+							"name": "/teams/:id/player/:playerId",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/teams/:id/player/:playerId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"teams",
+										":id",
+										"player",
+										":playerId"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "aute Duis",
+											"description": "(Required) "
+										},
+										{
+											"key": "playerId",
+											"value": "aute Duis",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Delete player from team",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "//teams/:id/player/:playerId",
+											"path": [
+												"",
+												"teams",
+												":id",
+												"player",
+												":playerId"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "aute Duis",
+													"description": "(Required) "
+												},
+												{
+													"key": "playerId",
+													"value": "aute Duis",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"hasError\": true,\n  \"errorMessage\": {\n    \"code\": \"officia laborum elit\",\n    \"message\": \"dolor nulla\"\n  },\n  \"data\": false\n}"
+								},
+								{
+									"name": "Return not found if team not found",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/teams/:id/player/:playerId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"teams",
+												":id",
+												"player",
+												":playerId"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "aute Duis",
+													"description": "(Required) "
+												},
+												{
+													"key": "playerId",
+													"value": "aute Duis",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"hasError\": true,\n  \"errorMessage\": {\n    \"code\": \"officia laborum elit\",\n    \"message\": \"dolor nulla\"\n  },\n  \"data\": false\n}"
+								},
+								{
+									"name": "Return internal server error if an unexpected exception throw",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/teams/:id/player/:playerId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"teams",
+												":id",
+												"player",
+												":playerId"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "aute Duis",
+													"description": "(Required) "
+												},
+												{
+													"key": "playerId",
+													"value": "aute Duis",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"hasError\": true,\n  \"errorMessage\": {\n    \"code\": \"officia laborum elit\",\n    \"message\": \"dolor nulla\"\n  },\n  \"data\": false\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "/teams/:id/players",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/plain"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/teams/:id/players",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"teams",
+								":id",
+								"players"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "aute Duis",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get team's player list",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "//teams/:id/players",
+									"path": [
+										"",
+										"teams",
+										":id",
+										"players"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "aute Duis",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"hasError\": false,\n  \"errorMessage\": {\n    \"code\": \"do eu\",\n    \"message\": \"ex cillum eu\"\n  },\n  \"data\": [\n    {\n      \"name\": \"laborum commodo sit\",\n      \"height\": -88098029,\n      \"age\": 377434\n    },\n    {\n      \"name\": \"et consequat consectetur\",\n      \"height\": 19061228,\n      \"age\": 72119001\n    }\n  ]\n}"
+						},
+						{
+							"name": "Return not found if team not found or player list is empty",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/teams/:id/players",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"teams",
+										":id",
+										"players"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "aute Duis",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"hasError\": true,\n  \"errorMessage\": {\n    \"code\": \"ea\",\n    \"message\": \"fugiat exercitation nostrud\"\n  },\n  \"data\": [\n    {\n      \"name\": \"laborum qui eiusmod\",\n      \"height\": 28928750,\n      \"age\": 10803789\n    },\n    {\n      \"name\": \"incididunt Ut\",\n      \"height\": 95731584,\n      \"age\": -75240809\n    }\n  ]\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:5185",
+			"type": "string"
+		}
+	]
+}
