@@ -79,19 +79,16 @@ public class TeamService : ITeamService
 
         var playerIds = await _teamRepository.GetPlayerIdsFromTeam(id);
 
+        // not allowed duplicate players in team
         // to make method idempotent, don't return error if player already added
         if (!playerIds.Contains(playerId))
         {
             playerIds.Add(playerId);
         }
 
-        try
+        var result = await _teamRepository.UpdatePlayerIdsOnTeam(id, playerIds);
+        if (!result)
         {
-            await _teamRepository.UpdatePlayerIdsOnTeam(id, playerIds);
-        }
-        catch (Exception exception)
-        {
-            _logger.LogError("Exception: {Exception}", exception);
             serviceResponse.ErrorMessage = ErrorMessages.ProcessFailed;
             return serviceResponse;
         }
@@ -104,7 +101,7 @@ public class TeamService : ITeamService
     {
         ServiceResponse<bool> serviceResponse = new();
 
-        // I don't prefer to check if player exist in the player-collection
+        // Don't check if player exist in the player-collection, because the deletion can bu used for correction
         var isTeamExist = await _teamRepository.IsTeamExist(id);
         if (!isTeamExist)
         {
@@ -115,13 +112,9 @@ public class TeamService : ITeamService
         var playerIds = await _teamRepository.GetPlayerIdsFromTeam(id);
         playerIds.Remove(playerId);
 
-        try
+        var result = await _teamRepository.UpdatePlayerIdsOnTeam(id, playerIds);
+        if (!result)
         {
-            await _teamRepository.UpdatePlayerIdsOnTeam(id, playerIds);
-        }
-        catch (Exception exception)
-        {
-            _logger.LogError("Exception: {Exception}", exception);
             serviceResponse.ErrorMessage = ErrorMessages.ProcessFailed;
             return serviceResponse;
         }

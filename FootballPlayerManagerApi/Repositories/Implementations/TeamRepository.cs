@@ -11,17 +11,29 @@ public class TeamRepository : ITeamRepository
 {
     private const string TeamCollectionName = "team-collection";
     private readonly IFootballProvider _footballProvider;
+    private ILogger<TeamRepository> _logger;
 
-    public TeamRepository(IFootballProvider footballProvider)
+    public TeamRepository(IFootballProvider footballProvider, ILogger<TeamRepository> logger)
     {
         _footballProvider = footballProvider;
+        _logger = logger;
     }
 
-    public async Task UpdatePlayerIdsOnTeam(string id, List<string> playerIds)
+    public async Task<bool> UpdatePlayerIdsOnTeam(string id, List<string> playerIds)
     {
         var collection = await GetCollection();
-        await collection.MutateInAsync(id, specs =>
-            specs.Replace(nameof(Team.PlayerIds).ToJsonFormat(), playerIds));
+        try
+        {
+            await collection.MutateInAsync(id, specs =>
+                specs.Replace(nameof(Team.PlayerIds).ToJsonFormat(), playerIds));
+        }
+        catch (Exception e)
+        {
+            _logger.LogError("An exception occurred: {Exception}", e);
+            return false;
+        }
+        
+        return true;
     }
 
     public async Task<List<string>> GetPlayerIdsFromTeam(string id)

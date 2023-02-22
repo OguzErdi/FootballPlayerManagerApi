@@ -111,9 +111,9 @@ public class TeamServiceTests
         //Verify
         response.ErrorMessage.Should().Be(ErrorMessages.PlayerNotFound);
     }
-    
+
     [Test]
-    public async Task AddPlayerToTeamAsync_WhenThrowException_ShouldReturnError()
+    public async Task AddPlayerToTeamAsync_WhenNotUpdatePlayerIds_ShouldReturnError()
     {
         //Arrange
         var id = _fixture.Create<string>();
@@ -122,7 +122,7 @@ public class TeamServiceTests
         _teamRepository.Setup(x => x.IsTeamExist(It.IsAny<string>())).ReturnsAsync(true);
         _playerRepository.Setup(x => x.IsPlayerExist(It.IsAny<string>())).ReturnsAsync(true);
         _teamRepository.Setup(x => x.GetPlayerIdsFromTeam(It.IsAny<string>())).ReturnsAsync(playerIds);
-        _teamRepository.Setup(x => x.UpdatePlayerIdsOnTeam(It.IsAny<string>(), It.IsAny<List<string>>())).Throws(new Exception());
+        _teamRepository.Setup(x => x.UpdatePlayerIdsOnTeam(It.IsAny<string>(), It.IsAny<List<string>>())).ReturnsAsync(false);
 
         //Act
         var response = await _sut.AddPlayerToTeamAsync(id, playerId);
@@ -130,7 +130,7 @@ public class TeamServiceTests
         //Verify
         response.ErrorMessage.Should().Be(ErrorMessages.ProcessFailed);
     }
-    
+
     [Test]
     public async Task AddPlayerToTeamAsync_TrueStory()
     {
@@ -141,8 +141,8 @@ public class TeamServiceTests
         _teamRepository.Setup(x => x.IsTeamExist(It.IsAny<string>())).ReturnsAsync(true);
         _playerRepository.Setup(x => x.IsPlayerExist(It.IsAny<string>())).ReturnsAsync(true);
         _teamRepository.Setup(x => x.GetPlayerIdsFromTeam(It.IsAny<string>())).ReturnsAsync(playerIds);
-        _teamRepository.Setup(x => x.UpdatePlayerIdsOnTeam(It.IsAny<string>(), It.IsAny<List<string>>())).Callback(() => {})
-            .Returns(Task.CompletedTask);
+        _teamRepository.Setup(x => x.UpdatePlayerIdsOnTeam(It.IsAny<string>(), It.IsAny<List<string>>()))
+            .ReturnsAsync(true);
 
         //Act
         var response = await _sut.AddPlayerToTeamAsync(id, playerId);
@@ -150,7 +150,7 @@ public class TeamServiceTests
         //Verify
         response.Data.Should().Be(true);
     }
-    
+
     [Test]
     public async Task DeletePlayerFromTeamAsync_WhenTeamNotFound_ShouldReturnError()
     {
@@ -165,31 +165,34 @@ public class TeamServiceTests
         //Verify
         response.ErrorMessage.Should().Be(ErrorMessages.TeamNotFound);
     }
-    
+
     [Test]
-    public async Task DeletePlayerFromTeamAsync_WhenThrowException_ShouldReturnError()
+    public async Task DeletePlayerFromTeamAsync_WhenNotUpdatePlayerIds_ShouldReturnError()
     {
         //Arrange
         var id = _fixture.Create<string>();
         var playerId = _fixture.Create<string>();
+        var playerIds = _fixture.Create<List<string>>();
         _teamRepository.Setup(x => x.IsTeamExist(It.IsAny<string>())).ReturnsAsync(true);
-        _teamRepository.Setup(x => x.UpdatePlayerIdsOnTeam(It.IsAny<string>(), It.IsAny<List<string>>())).Throws(new Exception());
+        _teamRepository.Setup(x => x.GetPlayerIdsFromTeam(It.IsAny<string>())).ReturnsAsync(playerIds);
+        _teamRepository.Setup(x => x.UpdatePlayerIdsOnTeam(It.IsAny<string>(), It.IsAny<List<string>>())).ReturnsAsync(false);
         //Act
         var response = await _sut.DeletePlayerFromTeamAsync(id, playerId);
 
         //Verify
         response.ErrorMessage.Should().Be(ErrorMessages.ProcessFailed);
     }
-    
+
     [Test]
     public async Task DeletePlayerFromTeamAsync_TrueStory()
     {
         //Arrange
         var id = _fixture.Create<string>();
         var playerId = _fixture.Create<string>();
+        var playerIds = _fixture.Create<List<string>>();
         _teamRepository.Setup(x => x.IsTeamExist(It.IsAny<string>())).ReturnsAsync(true);
-        _teamRepository.Setup(x => x.UpdatePlayerIdsOnTeam(It.IsAny<string>(), It.IsAny<List<string>>())).Callback(() => {})
-            .Returns(Task.CompletedTask);
+        _teamRepository.Setup(x => x.GetPlayerIdsFromTeam(It.IsAny<string>())).ReturnsAsync(playerIds);
+        _teamRepository.Setup(x => x.UpdatePlayerIdsOnTeam(It.IsAny<string>(), It.IsAny<List<string>>())).ReturnsAsync(true);
 
         //Act
         var response = await _sut.DeletePlayerFromTeamAsync(id, playerId);
