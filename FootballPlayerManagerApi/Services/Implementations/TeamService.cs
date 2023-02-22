@@ -46,10 +46,10 @@ public class TeamService : ITeamService
         return serviceResponse;
     }
 
-    private async Task<List<Player>> GetPlayerNamesAsync(Team team)
+    private async Task<List<Player>> GetPlayerNamesAsync(Team? team)
     {
         var playerNames = new List<Player>();
-        foreach (var playerId in team.PlayerIds)
+        foreach (var playerId in team?.PlayerIds!)
         {
             var player = await _playerRepository.GetPlayerAsync(playerId);
             //can return error if player not found, but this way we won't interrupt the call.
@@ -76,7 +76,7 @@ public class TeamService : ITeamService
             serviceResponse.ErrorMessage = ErrorMessages.PlayerNotFound;
             return serviceResponse;
         }
-        
+
         var playerIds = await _teamRepository.GetPlayerIdsFromTeam(id);
 
         // to make method idempotent, don't return error if player already added
@@ -95,7 +95,7 @@ public class TeamService : ITeamService
             serviceResponse.ErrorMessage = ErrorMessages.ProcessFailed;
             return serviceResponse;
         }
-        
+
         serviceResponse.Data = true;
         return serviceResponse;
     }
@@ -111,10 +111,10 @@ public class TeamService : ITeamService
             serviceResponse.ErrorMessage = ErrorMessages.TeamNotFound;
             return serviceResponse;
         }
-        
+
         var playerIds = await _teamRepository.GetPlayerIdsFromTeam(id);
-        playerIds?.Remove(playerId);
-        
+        playerIds.Remove(playerId);
+
         try
         {
             await _teamRepository.UpdatePlayerIdsOnTeam(id, playerIds);
@@ -125,7 +125,7 @@ public class TeamService : ITeamService
             serviceResponse.ErrorMessage = ErrorMessages.ProcessFailed;
             return serviceResponse;
         }
-        
+
         serviceResponse.Data = true;
         return serviceResponse;
     }

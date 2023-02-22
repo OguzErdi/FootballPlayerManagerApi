@@ -24,23 +24,24 @@ public class TeamRepository : ITeamRepository
             specs.Replace(nameof(Team.PlayerIds).ToJsonFormat(), playerIds));
     }
 
-    public async Task<List<string>?> GetPlayerIdsFromTeam(string id)
+    public async Task<List<string>> GetPlayerIdsFromTeam(string id)
     {
         var collection = await GetCollection();
         var playerIdsResult = await collection.LookupInAsync(id, specs =>
             specs.Get(nameof(Team.PlayerIds).ToJsonFormat()));
 
         var playerIds = playerIdsResult.ContentAs<List<string>>(0);
-        return playerIds;
+        return playerIds ?? new List<string>();
     }
 
-    public async Task<Team> GetTeamAsync(string id)
+    public async Task<Team?> GetTeamAsync(string id)
     {
         var collection = await GetCollection();
         try
         {
             var getResult = await collection.GetAsync(id);
-            return getResult.ContentAs<Team>();
+            var team = getResult.ContentAs<Team>();
+            return team;
         }
         catch (DocumentNotFoundException)
         {

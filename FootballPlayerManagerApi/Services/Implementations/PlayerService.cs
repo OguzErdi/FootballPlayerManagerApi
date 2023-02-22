@@ -48,9 +48,10 @@ public class PlayerService : IPlayerService
         }
 
         var player = _mapper.Map<Player>(request);
-        await _playerRepository.UpdatePlayerAsync(id, player);
-        serviceResponse.Data = true;
         
+        await _playerRepository.UpdatePlayerAsync(id, player);
+        
+        serviceResponse.Data = true;
         return serviceResponse;
     }
 }
