@@ -31,8 +31,8 @@ chmod +x configure-server.sh
 ```
 * On Windows, should be given write permission manually.
 
-After the setup, open http://localhost:8091/ui/index.html to see the login page of Couchbase.
-username: Administrator
+After the setup, open http://localhost:8091/ui/index.html to see the login page of Couchbase.  
+username: Administrator  
 password: password
 
 ### DB Structure
