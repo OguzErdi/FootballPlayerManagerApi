@@ -8,6 +8,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballPlayerManagerApi.Un
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootballPlayerManagerApi", "FootballPlayerManagerApi\FootballPlayerManagerApi.csproj", "{687AACC9-8B3B-4B58-B6F5-28F58133D09E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sln_items", "sln_items", "{A5263EA5-1996-403D-BBBD-555C2A3F89B5}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+		configure-server.sh = configure-server.sh
+		Dockerfile = Dockerfile
+		Football Player Manager Api Documentation.postman_collection.json = Football Player Manager Api Documentation.postman_collection.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
