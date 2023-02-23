@@ -20,6 +20,7 @@ Run this command to run container.
 docker run -d --name cb-server -p 8091-8094:8091-8094 -p 11210:11210 -e COUCHBASE_ADMINISTRATOR_USERNAME=Administrator -e COUCHBASE_ADMINISTRATOR_PASSWORD=password -e COUCHBASE_BUCKET=football-bucket -e COUCHBASE_RBAC_USERNAME=admin -e COUCHBASE_RBAC_PASSWORD=password -e COUCHBASE_RBAC_NAME="admin" -e CLUSTER_NAME=FootballCluster couchbase-dev
 ```
 
+#### With previous command, Couchbase DB is ready for usage. But if there any problem check logs.  
 Run this command to check if there "permission denied" error about configure-server.sh
 ```bash
 docker logs -f cb-server 
@@ -31,7 +32,7 @@ chmod +x configure-server.sh
 ```
 * On Windows, should be given write permission manually.
 
-After the setup, open http://localhost:8091/ui/index.html to see the login page of Couchbase.  
+#### After the setup, open http://localhost:8091/ui/index.html to see the login page of Couchbase.  
 username: Administrator  
 password: password
 
@@ -77,9 +78,3 @@ After running the project move http://localhost:5185/swagger/index.html to open 
 
 ### Postman Collection
 Football Player Manager Api Documentation.postman_collection.json added to the root folder to import endpoints to Postman easily.
-
-When the project started, sample data was seeded by CBSeederHostedService. To disable this, remove this line from Program.cs
-
-```csharp
-builder.Services.AddHostedService<CBSeederHostedService>();
-```
