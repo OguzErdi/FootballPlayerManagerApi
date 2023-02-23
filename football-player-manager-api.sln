@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sln_items", "sln_items", "{
 		configure-server.sh = configure-server.sh
 		Dockerfile = Dockerfile
 		Football Player Manager Api Documentation.postman_collection.json = Football Player Manager Api Documentation.postman_collection.json
+		.gitignore = .gitignore
 	EndProjectSection
 EndProject
 Global
