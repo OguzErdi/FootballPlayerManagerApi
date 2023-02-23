@@ -3,6 +3,7 @@ using FootballPlayerManagerApi.ConfigOptions;
 using FootballPlayerManagerApi.Couchbase.Providers.Implementations;
 using FootballPlayerManagerApi.Couchbase.Providers.Interfaces;
 using FootballPlayerManagerApi.Helpers;
+using FootballPlayerManagerApi.HostedServices;
 using FootballPlayerManagerApi.Repositories.Implementations;
 using FootballPlayerManagerApi.Repositories.Interfaces;
 using FootballPlayerManagerApi.Services.Implementations;
@@ -40,6 +41,10 @@ builder.Services.AddSingleton(mapper);
 // Serilog
 Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
 builder.Host.UseSerilog();
+
+// Seed DB with data
+// Remove this line if you don't want to seed data 
+builder.Services.AddHostedService<CBSeederHostedService>();
 
 var app = builder.Build();
 
